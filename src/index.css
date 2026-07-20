@@ -404,12 +404,6 @@ body {
   height: 0.875rem;
 }
 
-.form-footer {
-  display: flex;
-  justify-content: flex-end;
-  padding-top: 0.25rem;
-}
-
 .presets-menu {
   position: relative;
 }

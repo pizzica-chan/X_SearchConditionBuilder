@@ -12,10 +12,9 @@ import { LANGUAGES, WITHIN_TIME_OPTIONS, type SearchConditions } from "../types"
 interface SearchFormProps {
   conditions: SearchConditions;
   onChange: (patch: Partial<SearchConditions>) => void;
-  onReset: () => void;
 }
 
-export function SearchForm({ conditions, onChange, onReset }: SearchFormProps) {
+export function SearchForm({ conditions, onChange }: SearchFormProps) {
   return (
     <form className="search-form" onSubmit={(e) => e.preventDefault()}>
       <section className="panel">
@@ -74,7 +73,7 @@ export function SearchForm({ conditions, onChange, onReset }: SearchFormProps) {
 
       <section className="panel">
         <h2 className="section-title">アカウント</h2>
-        <div className="field-grid field-grid--3">
+        <div className="field-grid field-grid--2">
           <TextField
             id="fromAccounts"
             label="投稿者 (from:)"
@@ -98,6 +97,23 @@ export function SearchForm({ conditions, onChange, onReset }: SearchFormProps) {
             placeholder={FIELD_PLACEHOLDERS.mentionAccounts}
             value={conditions.mentionAccounts}
             onChange={(v) => onChange({ mentionAccounts: v })}
+          />
+          <TextField
+            id="excludeFromAccounts"
+            label="除外アカウント (-from:)"
+            hint={FIELD_HINTS.excludeFromAccounts}
+            placeholder={FIELD_PLACEHOLDERS.excludeFromAccounts}
+            value={conditions.excludeFromAccounts}
+            onChange={(v) => onChange({ excludeFromAccounts: v })}
+          />
+        </div>
+        <div className="checkbox-row">
+          <CheckboxField
+            id="followsOnly"
+            label="フォロー中のみ"
+            hint={FIELD_HINTS.followsOnly}
+            checked={conditions.followsOnly}
+            onChange={(v) => onChange({ followsOnly: v })}
           />
         </div>
       </section>
@@ -125,6 +141,13 @@ export function SearchForm({ conditions, onChange, onReset }: SearchFormProps) {
             hint={FIELD_HINTS.linksFilter}
             value={conditions.linksFilter}
             onChange={(v) => onChange({ linksFilter: v })}
+          />
+          <TriStateField
+            id="quoteFilter"
+            label="引用ツイート"
+            hint={FIELD_HINTS.quoteFilter}
+            value={conditions.quoteFilter}
+            onChange={(v) => onChange({ quoteFilter: v })}
           />
           <TextField
             id="urls"
@@ -201,7 +224,7 @@ export function SearchForm({ conditions, onChange, onReset }: SearchFormProps) {
       </section>
 
       <section className="panel">
-        <h2 className="section-title">拡張オプション</h2>
+        <h2 className="section-title">その他のオプション</h2>
         <p className="section-note">
           検索バーでは使えるが、公式の高度な検索フォームにはない演算子です。
         </p>
@@ -235,13 +258,6 @@ export function SearchForm({ conditions, onChange, onReset }: SearchFormProps) {
               onChange({ verifiedFilter: v as SearchConditions["verifiedFilter"] })
             }
           />
-          <TriStateField
-            id="quoteFilter"
-            label="引用ツイート"
-            hint={FIELD_HINTS.quoteFilter}
-            value={conditions.quoteFilter}
-            onChange={(v) => onChange({ quoteFilter: v })}
-          />
           <TextField
             id="cashtags"
             label="キャッシュタグ ($)"
@@ -249,14 +265,6 @@ export function SearchForm({ conditions, onChange, onReset }: SearchFormProps) {
             placeholder={FIELD_PLACEHOLDERS.cashtags}
             value={conditions.cashtags}
             onChange={(v) => onChange({ cashtags: v })}
-          />
-          <TextField
-            id="excludeFromAccounts"
-            label="除外アカウント (-from:)"
-            hint={FIELD_HINTS.excludeFromAccounts}
-            placeholder={FIELD_PLACEHOLDERS.excludeFromAccounts}
-            value={conditions.excludeFromAccounts}
-            onChange={(v) => onChange({ excludeFromAccounts: v })}
           />
           <TextField
             id="listId"
@@ -283,22 +291,7 @@ export function SearchForm({ conditions, onChange, onReset }: SearchFormProps) {
             onChange={(v) => onChange({ withinRadius: v })}
           />
         </div>
-        <div className="checkbox-row">
-          <CheckboxField
-            id="followsOnly"
-            label="フォロー中のみ"
-            hint={FIELD_HINTS.followsOnly}
-            checked={conditions.followsOnly}
-            onChange={(v) => onChange({ followsOnly: v })}
-          />
-        </div>
       </section>
-
-      <div className="form-footer">
-        <button type="button" className="btn btn-ghost btn-sm" onClick={onReset}>
-          クリア
-        </button>
-      </div>
     </form>
   );
 }

@@ -26,6 +26,13 @@ export default function App() {
             <h1 className="brand-title">検索条件ビルダー</h1>
           </div>
           <div className="header-actions">
+            <button
+              type="button"
+              className="btn btn-ghost btn-sm"
+              onClick={handleReset}
+            >
+              クリア
+            </button>
             <SavedPresetsMenu
               presets={presets}
               onSave={savePreset}
@@ -49,11 +56,7 @@ export default function App() {
       </header>
 
       <main className="main">
-        <SearchForm
-          conditions={conditions}
-          onChange={handleChange}
-          onReset={handleReset}
-        />
+        <SearchForm conditions={conditions} onChange={handleChange} />
       </main>
     </div>
   );
