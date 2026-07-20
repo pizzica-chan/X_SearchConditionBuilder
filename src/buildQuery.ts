@@ -59,6 +59,15 @@ function applyMentions(parts: string[], input: string): void {
   }
 }
 
+function applyUrls(parts: string[], input: string): void {
+  for (const raw of splitTokens(input)) {
+    const url = raw.replace(/^url:/i, "").trim();
+    if (!url) continue;
+    const value = url.includes(" ") ? `"${url}"` : url;
+    parts.push(`url:${value}`);
+  }
+}
+
 function applyHashtags(parts: string[], input: string): void {
   for (const raw of splitTokens(input)) {
     const tag = raw.replace(/^#/, "");
@@ -150,6 +159,7 @@ export function buildQuery(conditions: SearchConditions): string {
   applyAccounts(parts, conditions.fromAccounts, "from");
   applyAccounts(parts, conditions.toAccounts, "to");
   applyMentions(parts, conditions.mentionAccounts);
+  applyUrls(parts, conditions.urls);
   applyExcludeAccounts(parts, conditions.excludeFromAccounts);
 
   if (conditions.listId.trim()) {
@@ -161,6 +171,7 @@ export function buildQuery(conditions: SearchConditions): string {
   }
 
   applyTriStateFilter(parts, conditions.repliesFilter, "filter:replies", "-filter:replies");
+  applyTriStateFilter(parts, conditions.mentionsFilter, "filter:mentions", "-filter:mentions");
   applyTriStateFilter(parts, conditions.linksFilter, "filter:links", "-filter:links");
   applyTriStateFilter(parts, conditions.quoteFilter, "filter:quote", "-filter:quote");
   applyRetweetsFilter(parts, conditions.retweetsFilter);

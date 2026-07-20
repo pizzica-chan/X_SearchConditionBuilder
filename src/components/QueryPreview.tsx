@@ -31,7 +31,7 @@ export function QueryPreview({ conditions }: QueryPreviewProps) {
           disabled={isEmpty}
           onClick={() => openSearch(buildXSearchLatestUrl(query))}
         >
-          最新
+          Xで最新検索
         </button>
         <button
           type="button"
@@ -39,7 +39,7 @@ export function QueryPreview({ conditions }: QueryPreviewProps) {
           disabled={isEmpty}
           onClick={() => openSearch(buildXSearchTopUrl(query))}
         >
-          トップ
+          Xでトップ検索
         </button>
         <button
           type="button"

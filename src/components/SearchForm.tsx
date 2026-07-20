@@ -86,8 +86,9 @@ export function SearchForm({ conditions, onChange, onReset }: SearchFormProps) {
           />
           <TextField
             id="mentionAccounts"
-            label="メンション (@)"
+            label="特定のメンション (@)"
             hint={FIELD_HINTS.mentionAccounts}
+            placeholder="username"
             value={conditions.mentionAccounts}
             onChange={(v) => onChange({ mentionAccounts: v })}
           />
@@ -105,11 +106,26 @@ export function SearchForm({ conditions, onChange, onReset }: SearchFormProps) {
             onChange={(v) => onChange({ repliesFilter: v })}
           />
           <TriStateField
+            id="mentionsFilter"
+            label="メンション付き (filter:mentions)"
+            hint={FIELD_HINTS.mentionsFilter}
+            value={conditions.mentionsFilter}
+            onChange={(v) => onChange({ mentionsFilter: v })}
+          />
+          <TriStateField
             id="linksFilter"
             label="リンク"
             hint={FIELD_HINTS.linksFilter}
             value={conditions.linksFilter}
             onChange={(v) => onChange({ linksFilter: v })}
+          />
+          <TextField
+            id="urls"
+            label="URL (url:)"
+            hint={FIELD_HINTS.urls}
+            placeholder="example.com"
+            value={conditions.urls}
+            onChange={(v) => onChange({ urls: v })}
           />
           <SelectField
             id="retweetsFilter"

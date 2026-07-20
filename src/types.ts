@@ -17,9 +17,11 @@ export interface SearchConditions {
   fromAccounts: string;
   toAccounts: string;
   mentionAccounts: string;
+  urls: string;
   excludeFromAccounts: string;
   listId: string;
   repliesFilter: TriStateFilter;
+  mentionsFilter: TriStateFilter;
   linksFilter: TriStateFilter;
   retweetsFilter: RetweetsFilter;
   mediaFilter: MediaFilter;
@@ -47,9 +49,11 @@ export const defaultConditions: SearchConditions = {
   fromAccounts: "",
   toAccounts: "",
   mentionAccounts: "",
+  urls: "",
   excludeFromAccounts: "",
   listId: "",
   repliesFilter: "all",
+  mentionsFilter: "all",
   linksFilter: "all",
   retweetsFilter: "include",
   mediaFilter: "all",
