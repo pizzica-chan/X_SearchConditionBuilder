@@ -59,3 +59,24 @@ export const FIELD_HINTS = {
   presetOverwrite: "現在フォームの内容で、この保存済み条件を更新します。",
   presetDelete: "この保存済み条件をブラウザから削除します。",
 } as const;
+
+export const FIELD_PLACEHOLDERS = {
+  allWords: "語句1 語句2",
+  exactPhrase: "語順どおりのフレーズ",
+  anyWords: "猫 犬",
+  noneWords: "除外する語句",
+  hashtags: "プログラミング",
+  fromAccounts: "username",
+  toAccounts: "username",
+  mentionAccounts: "username",
+  urls: "example.com",
+  minLikes: "100",
+  minReplies: "10",
+  minRetweets: "10",
+  cashtags: "AAPL",
+  excludeFromAccounts: "username",
+  listId: "1234567890",
+  nearCity: "Tokyo",
+  withinRadius: "15",
+  presetName: "条件名を入力",
+} as const;

@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { FieldHint } from "./FieldHint";
-import { FIELD_HINTS } from "../fieldHints";
+import { FIELD_HINTS, FIELD_PLACEHOLDERS } from "../fieldHints";
 import type { SavedPreset } from "../savedPresets";
 
 interface SavedPresetsMenuProps {
@@ -86,7 +86,7 @@ export function SavedPresetsMenu({
               className="field-input"
               value={name}
               maxLength={40}
-              placeholder="条件名（例: 競合ウォッチ）"
+              placeholder={FIELD_PLACEHOLDERS.presetName}
               aria-label="保存する検索条件の名前"
               onChange={(e) => setName(e.target.value)}
               onKeyDown={(e) => {

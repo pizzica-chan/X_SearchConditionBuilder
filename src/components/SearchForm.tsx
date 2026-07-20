@@ -6,7 +6,7 @@ import {
   TextField,
   TriStateField,
 } from "./Fields";
-import { FIELD_HINTS } from "../fieldHints";
+import { FIELD_HINTS, FIELD_PLACEHOLDERS } from "../fieldHints";
 import { LANGUAGES, WITHIN_TIME_OPTIONS, type SearchConditions } from "../types";
 
 interface SearchFormProps {
@@ -25,6 +25,7 @@ export function SearchForm({ conditions, onChange, onReset }: SearchFormProps) {
             id="allWords"
             label="すべて含む"
             hint={FIELD_HINTS.allWords}
+            placeholder={FIELD_PLACEHOLDERS.allWords}
             value={conditions.allWords}
             onChange={(v) => onChange({ allWords: v })}
           />
@@ -32,6 +33,7 @@ export function SearchForm({ conditions, onChange, onReset }: SearchFormProps) {
             id="exactPhrase"
             label="フレーズ"
             hint={FIELD_HINTS.exactPhrase}
+            placeholder={FIELD_PLACEHOLDERS.exactPhrase}
             value={conditions.exactPhrase}
             onChange={(v) => onChange({ exactPhrase: v })}
           />
@@ -39,6 +41,7 @@ export function SearchForm({ conditions, onChange, onReset }: SearchFormProps) {
             id="anyWords"
             label="いずれか"
             hint={FIELD_HINTS.anyWords}
+            placeholder={FIELD_PLACEHOLDERS.anyWords}
             value={conditions.anyWords}
             onChange={(v) => onChange({ anyWords: v })}
           />
@@ -46,6 +49,7 @@ export function SearchForm({ conditions, onChange, onReset }: SearchFormProps) {
             id="noneWords"
             label="含まない"
             hint={FIELD_HINTS.noneWords}
+            placeholder={FIELD_PLACEHOLDERS.noneWords}
             value={conditions.noneWords}
             onChange={(v) => onChange({ noneWords: v })}
           />
@@ -53,6 +57,7 @@ export function SearchForm({ conditions, onChange, onReset }: SearchFormProps) {
             id="hashtags"
             label="ハッシュタグ"
             hint={FIELD_HINTS.hashtags}
+            placeholder={FIELD_PLACEHOLDERS.hashtags}
             value={conditions.hashtags}
             onChange={(v) => onChange({ hashtags: v })}
           />
@@ -74,6 +79,7 @@ export function SearchForm({ conditions, onChange, onReset }: SearchFormProps) {
             id="fromAccounts"
             label="投稿者 (from:)"
             hint={FIELD_HINTS.fromAccounts}
+            placeholder={FIELD_PLACEHOLDERS.fromAccounts}
             value={conditions.fromAccounts}
             onChange={(v) => onChange({ fromAccounts: v })}
           />
@@ -81,6 +87,7 @@ export function SearchForm({ conditions, onChange, onReset }: SearchFormProps) {
             id="toAccounts"
             label="返信先 (to:)"
             hint={FIELD_HINTS.toAccounts}
+            placeholder={FIELD_PLACEHOLDERS.toAccounts}
             value={conditions.toAccounts}
             onChange={(v) => onChange({ toAccounts: v })}
           />
@@ -88,7 +95,7 @@ export function SearchForm({ conditions, onChange, onReset }: SearchFormProps) {
             id="mentionAccounts"
             label="特定のメンション (@)"
             hint={FIELD_HINTS.mentionAccounts}
-            placeholder="username"
+            placeholder={FIELD_PLACEHOLDERS.mentionAccounts}
             value={conditions.mentionAccounts}
             onChange={(v) => onChange({ mentionAccounts: v })}
           />
@@ -123,7 +130,7 @@ export function SearchForm({ conditions, onChange, onReset }: SearchFormProps) {
             id="urls"
             label="URL (url:)"
             hint={FIELD_HINTS.urls}
-            placeholder="example.com"
+            placeholder={FIELD_PLACEHOLDERS.urls}
             value={conditions.urls}
             onChange={(v) => onChange({ urls: v })}
           />
@@ -142,6 +149,7 @@ export function SearchForm({ conditions, onChange, onReset }: SearchFormProps) {
             id="minLikes"
             label="最小いいね"
             hint={FIELD_HINTS.minLikes}
+            placeholder={FIELD_PLACEHOLDERS.minLikes}
             value={conditions.minLikes}
             onChange={(v) => onChange({ minLikes: v })}
           />
@@ -149,6 +157,7 @@ export function SearchForm({ conditions, onChange, onReset }: SearchFormProps) {
             id="minReplies"
             label="最小返信"
             hint={FIELD_HINTS.minReplies}
+            placeholder={FIELD_PLACEHOLDERS.minReplies}
             value={conditions.minReplies}
             onChange={(v) => onChange({ minReplies: v })}
           />
@@ -156,6 +165,7 @@ export function SearchForm({ conditions, onChange, onReset }: SearchFormProps) {
             id="minRetweets"
             label="最小RT"
             hint={FIELD_HINTS.minRetweets}
+            placeholder={FIELD_PLACEHOLDERS.minRetweets}
             value={conditions.minRetweets}
             onChange={(v) => onChange({ minRetweets: v })}
           />
@@ -236,6 +246,7 @@ export function SearchForm({ conditions, onChange, onReset }: SearchFormProps) {
             id="cashtags"
             label="キャッシュタグ ($)"
             hint={FIELD_HINTS.cashtags}
+            placeholder={FIELD_PLACEHOLDERS.cashtags}
             value={conditions.cashtags}
             onChange={(v) => onChange({ cashtags: v })}
           />
@@ -243,6 +254,7 @@ export function SearchForm({ conditions, onChange, onReset }: SearchFormProps) {
             id="excludeFromAccounts"
             label="除外アカウント (-from:)"
             hint={FIELD_HINTS.excludeFromAccounts}
+            placeholder={FIELD_PLACEHOLDERS.excludeFromAccounts}
             value={conditions.excludeFromAccounts}
             onChange={(v) => onChange({ excludeFromAccounts: v })}
           />
@@ -250,6 +262,7 @@ export function SearchForm({ conditions, onChange, onReset }: SearchFormProps) {
             id="listId"
             label="リスト ID (list:)"
             hint={FIELD_HINTS.listId}
+            placeholder={FIELD_PLACEHOLDERS.listId}
             value={conditions.listId}
             onChange={(v) => onChange({ listId: v })}
           />
@@ -257,6 +270,7 @@ export function SearchForm({ conditions, onChange, onReset }: SearchFormProps) {
             id="nearCity"
             label="場所 (near:)"
             hint={FIELD_HINTS.nearCity}
+            placeholder={FIELD_PLACEHOLDERS.nearCity}
             value={conditions.nearCity}
             onChange={(v) => onChange({ nearCity: v })}
           />
@@ -264,6 +278,7 @@ export function SearchForm({ conditions, onChange, onReset }: SearchFormProps) {
             id="withinRadius"
             label="半径 (within: mi)"
             hint={FIELD_HINTS.withinRadius}
+            placeholder={FIELD_PLACEHOLDERS.withinRadius}
             value={conditions.withinRadius}
             onChange={(v) => onChange({ withinRadius: v })}
           />
