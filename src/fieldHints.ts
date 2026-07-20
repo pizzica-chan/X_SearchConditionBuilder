@@ -61,15 +61,15 @@ export const FIELD_HINTS = {
 } as const;
 
 export const FIELD_PLACEHOLDERS = {
-  allWords: "語句1 語句2",
-  exactPhrase: "語順どおりのフレーズ",
-  anyWords: "猫 犬",
-  noneWords: "除外する語句",
-  hashtags: "プログラミング",
-  fromAccounts: "username",
+  allWords: "東京 カフェ（両方必須）",
+  exactPhrase: "おはようございます",
+  anyWords: "猫 犬（どちらか）",
+  noneWords: "広告",
+  hashtags: "ニュース",
+  fromAccounts: "nasa",
   toAccounts: "username",
   mentionAccounts: "username",
-  urls: "example.com",
+  urls: "github.com",
   minLikes: "100",
   minReplies: "10",
   minRetweets: "10",
@@ -78,5 +78,5 @@ export const FIELD_PLACEHOLDERS = {
   listId: "1234567890",
   nearCity: "Tokyo",
   withinRadius: "15",
-  presetName: "条件名を入力",
+  presetName: "お気に入り",
 } as const;
