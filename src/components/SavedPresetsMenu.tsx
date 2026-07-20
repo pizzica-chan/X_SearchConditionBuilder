@@ -60,21 +60,25 @@ export function SavedPresetsMenu({
     <div className={`presets-menu ${open ? "presets-menu--open" : ""}`} ref={menuRef}>
       <button
         type="button"
-        className="btn btn-ghost btn-sm presets-menu-trigger"
+        className="btn btn-secondary btn-sm presets-menu-trigger"
         aria-expanded={open}
         aria-haspopup="dialog"
+        aria-label="検索条件の保存と読み込み"
+        title="検索条件に名前を付けて保存・読み込み"
         onClick={() => setOpen((value) => !value)}
       >
-        保存
+        条件を保存
         {presets.length > 0 && <span className="presets-count">{presets.length}</span>}
       </button>
 
       {open && (
-        <div className="presets-popover" role="dialog" aria-label="保存した検索条件">
+        <div className="presets-popover" role="dialog" aria-label="検索条件の保存と読み込み">
           <div className="presets-popover-header">
-            <span className="presets-popover-title">保存した条件</span>
+            <span className="presets-popover-title">検索条件の保存・読み込み</span>
             <FieldHint text={FIELD_HINTS.presetName} />
           </div>
+
+          <p className="presets-popover-lead">名前を付けて、現在の検索条件をブラウザに保存できます。</p>
 
           <div className="saved-presets-save">
             <input
@@ -82,8 +86,8 @@ export function SavedPresetsMenu({
               className="field-input"
               value={name}
               maxLength={40}
-              placeholder="名前"
-              aria-label="保存名"
+              placeholder="条件名（例: 競合ウォッチ）"
+              aria-label="保存する検索条件の名前"
               onChange={(e) => setName(e.target.value)}
               onKeyDown={(e) => {
                 if (e.key === "Enter") {
@@ -98,12 +102,14 @@ export function SavedPresetsMenu({
               disabled={!name.trim()}
               onClick={handleSave}
             >
-              追加
+              保存
             </button>
           </div>
 
           {presets.length > 0 ? (
-            <ul className="preset-list">
+            <>
+              <p className="presets-list-label">保存済みの検索条件</p>
+              <ul className="preset-list">
               {presets.map((preset) => (
                 <li key={preset.id} className="preset-item">
                   <button
@@ -135,8 +141,9 @@ export function SavedPresetsMenu({
                 </li>
               ))}
             </ul>
+            </>
           ) : (
-            <p className="preset-empty">まだ保存されていません</p>
+            <p className="preset-empty">保存した検索条件はここに表示されます</p>
           )}
         </div>
       )}
