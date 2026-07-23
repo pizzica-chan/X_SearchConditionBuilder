@@ -8,7 +8,13 @@ import {
   saveDraft,
   type SavedPreset,
 } from "../savedPresets";
+import { downloadPresetsCsv, importPresetsFromCsv } from "../presetCsv";
 import { defaultConditions, type SearchConditions } from "../types";
+
+export type PresetImportFeedback = {
+  kind: "success" | "error";
+  message: string;
+};
 
 export function useLocalConditions() {
   const [conditions, setConditions] = useState<SearchConditions>(
@@ -72,6 +78,43 @@ export function useLocalConditions() {
     [conditions],
   );
 
+  const exportPresetsCsv = useCallback(() => {
+    if (presets.length === 0) return;
+    downloadPresetsCsv(presets);
+  }, [presets]);
+
+  const importPresetsCsv = useCallback(async (file: File): Promise<PresetImportFeedback> => {
+    try {
+      const text = await file.text();
+      const { presets: imported, errors } = importPresetsFromCsv(text);
+
+      if (imported.length === 0) {
+        return {
+          kind: "error",
+          message: errors[0] ?? "インポートに失敗しました",
+        };
+      }
+
+      setPresets((prev) => {
+        const next = [...imported, ...prev].sort((a, b) => b.savedAt - a.savedAt);
+        persistPresets(next);
+        return next;
+      });
+
+      const errorNote =
+        errors.length > 0 ? `（${errors.length} 行はスキップ）` : "";
+      return {
+        kind: "success",
+        message: `${imported.length} 件をインポートしました${errorNote}`,
+      };
+    } catch {
+      return {
+        kind: "error",
+        message: "CSV ファイルの読み込みに失敗しました",
+      };
+    }
+  }, []);
+
   return {
     conditions,
     presets,
@@ -81,5 +124,7 @@ export function useLocalConditions() {
     loadPreset,
     deletePreset,
     updatePreset,
+    exportPresetsCsv,
+    importPresetsCsv,
   };
 }

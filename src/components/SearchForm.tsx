@@ -197,7 +197,7 @@ export function SearchForm({ conditions, onChange }: SearchFormProps) {
 
       <section className="panel">
         <h2 className="section-title">日付</h2>
-        <div className="field-grid field-grid--3">
+        <div className="field-grid field-grid--date">
           <DateField
             id="since"
             label="開始日"

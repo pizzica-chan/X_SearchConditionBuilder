@@ -13,6 +13,8 @@ export default function App() {
     loadPreset,
     deletePreset,
     updatePreset,
+    exportPresetsCsv,
+    importPresetsCsv,
   } = useLocalConditions();
 
   return (
@@ -39,6 +41,8 @@ export default function App() {
               onLoad={loadPreset}
               onUpdate={updatePreset}
               onDelete={deletePreset}
+              onExportCsv={exportPresetsCsv}
+              onImportCsv={importPresetsCsv}
             />
             <a
               href="https://x.com/search-advanced"

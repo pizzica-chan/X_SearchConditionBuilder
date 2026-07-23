@@ -24,6 +24,13 @@ function quoteIfNeeded(word: string): string {
   return word;
 }
 
+function quoteExactPhrase(phrase: string): string {
+  if (phrase.startsWith('"') && phrase.endsWith('"')) {
+    return phrase;
+  }
+  return `"${phrase}"`;
+}
+
 function applyTriStateFilter(
   parts: string[],
   filter: TriStateFilter,
@@ -140,7 +147,7 @@ export function buildQuery(conditions: SearchConditions): string {
 
   const phrase = conditions.exactPhrase.trim();
   if (phrase) {
-    parts.push(phrase.includes(" ") ? `"${phrase}"` : phrase);
+    parts.push(quoteExactPhrase(phrase));
   }
 
   const anyWords = splitTokens(conditions.anyWords);

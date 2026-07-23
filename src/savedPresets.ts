@@ -10,7 +10,7 @@ export interface SavedPreset {
 const PRESETS_KEY = "x-scb:presets";
 const DRAFT_KEY = "x-scb:draft";
 
-function normalizeConditions(raw: unknown): SearchConditions {
+export function normalizeConditions(raw: unknown): SearchConditions {
   if (!raw || typeof raw !== "object") {
     return { ...defaultConditions };
   }
