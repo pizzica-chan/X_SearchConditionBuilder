@@ -31,8 +31,8 @@ export const FIELD_HINTS = {
   minReplies: "返信数がこの値以上の投稿に絞ります。空欄の場合は条件なし。",
   minRetweets: "リツイート数がこの値以上の投稿に絞ります。空欄の場合は条件なし。",
 
-  since: "この日付以降（当日を含む）の投稿に絞ります。",
-  until: "この日付より前（当日は含まない）の投稿に絞ります。",
+  since: "この日付以降（当日を含む）の投稿に絞ります。形式は YYYY-MM-DD です。",
+  until: "この日付より前（当日は含まない）の投稿に絞ります。形式は YYYY-MM-DD です。",
   withinTime:
     "現在からさかのぼった期間で絞ります。開始日・終了日とは別の指定方法です。",
 
@@ -83,4 +83,6 @@ export const FIELD_PLACEHOLDERS = {
   nearCity: "Tokyo",
   withinRadius: "15",
   presetName: "お気に入り",
+  since: "YYYY-MM-DD",
+  until: "YYYY-MM-DD",
 } as const;
