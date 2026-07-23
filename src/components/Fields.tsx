@@ -75,15 +75,17 @@ interface DateFieldProps {
 
 export function DateField({ id, label, hint, value, onChange }: DateFieldProps) {
   return (
-    <div className="field">
+    <div className="field field--date">
       <FieldLabel htmlFor={id} label={label} hint={hint} />
-      <input
-        id={id}
-        type="date"
-        className="field-input"
-        value={value}
-        onChange={(e) => onChange(e.target.value)}
-      />
+      <div className="field-date-wrap">
+        <input
+          id={id}
+          type="date"
+          className="field-input field-input--date"
+          value={value}
+          onChange={(e) => onChange(e.target.value)}
+        />
+      </div>
     </div>
   );
 }

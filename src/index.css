@@ -45,6 +45,7 @@ body {
   min-height: 100vh;
   display: flex;
   flex-direction: column;
+  overflow-x: clip;
 }
 
 .header {
@@ -215,12 +216,14 @@ body {
   width: 100%;
   margin: 0 auto;
   padding: 0.625rem 0.875rem 1.5rem;
+  min-width: 0;
 }
 
 .search-form {
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
+  min-width: 0;
 }
 
 .panel {
@@ -264,6 +267,12 @@ body {
     grid-template-columns: repeat(4, 1fr);
   }
 
+  .field-grid--date {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (min-width: 640px) {
   .field-grid--date {
     grid-template-columns: 1fr 1fr;
   }
@@ -600,8 +609,39 @@ body {
   color: var(--text-muted);
 }
 
+.field--date {
+  min-width: 0;
+}
+
+.field-date-wrap {
+  width: 100%;
+  min-width: 0;
+  max-width: 100%;
+  overflow: hidden;
+}
+
+.field-input--date,
 input[type="date"].field-input {
   display: block;
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
+  -webkit-min-logical-width: 0;
+  box-sizing: border-box;
+}
+
+input[type="date"].field-input::-webkit-date-and-time-value {
+  text-align: left;
+}
+
+input[type="date"].field-input::-webkit-datetime-edit {
+  display: block;
+  overflow: hidden;
+  max-width: 100%;
+}
+
+input[type="date"].field-input::-webkit-datetime-edit-fields-wrapper {
+  max-width: 100%;
 }
 
 input[type="date"]::-webkit-calendar-picker-indicator {
@@ -616,5 +656,10 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 
   .action-row {
     justify-content: flex-end;
+  }
+
+  input[type="date"].field-input {
+    padding-right: 0.25rem;
+    font-size: 0.75rem;
   }
 }
