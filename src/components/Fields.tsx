@@ -1,22 +1,4 @@
-import { useEffect, useState } from "react";
 import { FieldHint, FieldLabel } from "./FieldHint";
-
-function useCompactDateInput(): boolean {
-  const [compact, setCompact] = useState(
-    () =>
-      typeof window !== "undefined" &&
-      window.matchMedia("(max-width: 639px)").matches,
-  );
-
-  useEffect(() => {
-    const media = window.matchMedia("(max-width: 639px)");
-    const onChange = (event: MediaQueryListEvent) => setCompact(event.matches);
-    media.addEventListener("change", onChange);
-    return () => media.removeEventListener("change", onChange);
-  }, []);
-
-  return compact;
-}
 
 interface FieldProps {
   id: string;
@@ -88,46 +70,22 @@ interface DateFieldProps {
   label: string;
   hint?: string;
   value: string;
-  placeholder?: string;
   onChange: (value: string) => void;
 }
 
-export function DateField({
-  id,
-  label,
-  hint,
-  value,
-  placeholder = "YYYY-MM-DD",
-  onChange,
-}: DateFieldProps) {
-  const compact = useCompactDateInput();
-
+export function DateField({ id, label, hint, value, onChange }: DateFieldProps) {
   return (
     <div className="field field--date">
       <FieldLabel htmlFor={id} label={label} hint={hint} />
-      {compact ? (
+      <div className="field-date-wrap">
         <input
           id={id}
-          type="text"
-          inputMode="numeric"
-          className="field-input field-input--date-text"
+          type="date"
+          className="field-input field-input--date"
           value={value}
-          placeholder={placeholder}
-          maxLength={10}
-          autoComplete="off"
           onChange={(e) => onChange(e.target.value)}
         />
-      ) : (
-        <div className="field-date-wrap">
-          <input
-            id={id}
-            type="date"
-            className="field-input field-input--date"
-            value={value}
-            onChange={(e) => onChange(e.target.value)}
-          />
-        </div>
-      )}
+      </div>
     </div>
   );
 }

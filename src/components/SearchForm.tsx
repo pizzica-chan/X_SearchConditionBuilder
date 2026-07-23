@@ -202,7 +202,6 @@ export function SearchForm({ conditions, onChange }: SearchFormProps) {
             id="since"
             label="開始日"
             hint={FIELD_HINTS.since}
-            placeholder={FIELD_PLACEHOLDERS.since}
             value={conditions.since}
             onChange={(v) => onChange({ since: v })}
           />
@@ -210,7 +209,6 @@ export function SearchForm({ conditions, onChange }: SearchFormProps) {
             id="until"
             label="終了日"
             hint={FIELD_HINTS.until}
-            placeholder={FIELD_PLACEHOLDERS.until}
             value={conditions.until}
             onChange={(v) => onChange({ until: v })}
           />
