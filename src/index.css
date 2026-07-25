@@ -481,8 +481,20 @@ body {
 .presets-popover-header {
   display: flex;
   align-items: center;
-  gap: 0.25rem;
+  justify-content: space-between;
+  gap: 0.5rem;
   margin-bottom: 0.5rem;
+}
+
+.presets-popover-header-main {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+  min-width: 0;
+}
+
+.presets-popover-close {
+  display: none;
 }
 
 .presets-popover-title {
@@ -759,5 +771,10 @@ input[type="date"]::-webkit-calendar-picker-indicator {
     left: 0.875rem;
     width: auto;
     max-height: none;
+  }
+
+  .presets-popover-close {
+    display: inline-flex;
+    flex-shrink: 0;
   }
 }

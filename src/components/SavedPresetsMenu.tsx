@@ -175,8 +175,18 @@ export function SavedPresetsMenu({
       />
       <div className="presets-popover" role="dialog" aria-label="検索条件の保存と読み込み">
         <div className="presets-popover-header">
-          <span className="presets-popover-title">検索条件の保存・読み込み</span>
-          <FieldHint text={FIELD_HINTS.presetName} />
+          <div className="presets-popover-header-main">
+            <span className="presets-popover-title">検索条件の保存・読み込み</span>
+            <FieldHint text={FIELD_HINTS.presetName} />
+          </div>
+          <button
+            type="button"
+            className="presets-popover-close btn btn-ghost btn-sm"
+            aria-label="閉じる"
+            onClick={() => setOpen(false)}
+          >
+            閉じる
+          </button>
         </div>
 
         <p className="presets-popover-lead">名前を付けて、現在の検索条件をブラウザに保存できます。</p>
