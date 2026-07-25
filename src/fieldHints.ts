@@ -58,6 +58,10 @@ export const FIELD_HINTS = {
     "名前を付けて検索条件をブラウザに保存します。一覧の名前をタップすると読み込めます。",
   presetOverwrite: "現在フォームの内容で、この保存済み条件を更新します。",
   presetDelete: "この保存済み条件をブラウザから削除します。",
+  presetSearchLatest:
+    "この保存済み条件のまま X の最新検索を開きます。ビルダーの表示は変わりません。",
+  presetSearchTop:
+    "この保存済み条件のまま X のトップ検索を開きます。ビルダーの表示は変わりません。",
   presetExport:
     "保存済みの検索条件を CSV ファイルとしてダウンロードします。各項目は引用符付きで出力されます。",
   presetImport:

@@ -119,6 +119,34 @@ export function SearchForm({ conditions, onChange }: SearchFormProps) {
       </section>
 
       <section className="panel">
+        <h2 className="section-title">日付</h2>
+        <div className="field-grid field-grid--date">
+          <DateField
+            id="since"
+            label="開始日"
+            hint={FIELD_HINTS.since}
+            value={conditions.since}
+            onChange={(v) => onChange({ since: v })}
+          />
+          <DateField
+            id="until"
+            label="終了日"
+            hint={FIELD_HINTS.until}
+            value={conditions.until}
+            onChange={(v) => onChange({ until: v })}
+          />
+          <SelectField
+            id="withinTime"
+            label="直近期間"
+            hint={FIELD_HINTS.withinTime}
+            value={conditions.withinTime}
+            options={WITHIN_TIME_OPTIONS}
+            onChange={(v) => onChange({ withinTime: v })}
+          />
+        </div>
+      </section>
+
+      <section className="panel">
         <h2 className="section-title">フィルター・エンゲージメント</h2>
         <div className="field-grid field-grid--4">
           <TriStateField
@@ -191,34 +219,6 @@ export function SearchForm({ conditions, onChange }: SearchFormProps) {
             placeholder={FIELD_PLACEHOLDERS.minRetweets}
             value={conditions.minRetweets}
             onChange={(v) => onChange({ minRetweets: v })}
-          />
-        </div>
-      </section>
-
-      <section className="panel">
-        <h2 className="section-title">日付</h2>
-        <div className="field-grid field-grid--date">
-          <DateField
-            id="since"
-            label="開始日"
-            hint={FIELD_HINTS.since}
-            value={conditions.since}
-            onChange={(v) => onChange({ since: v })}
-          />
-          <DateField
-            id="until"
-            label="終了日"
-            hint={FIELD_HINTS.until}
-            value={conditions.until}
-            onChange={(v) => onChange({ until: v })}
-          />
-          <SelectField
-            id="withinTime"
-            label="直近期間"
-            hint={FIELD_HINTS.withinTime}
-            value={conditions.withinTime}
-            options={WITHIN_TIME_OPTIONS}
-            onChange={(v) => onChange({ withinTime: v })}
           />
         </div>
       </section>

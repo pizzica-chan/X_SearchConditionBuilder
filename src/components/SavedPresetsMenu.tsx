@@ -1,8 +1,11 @@
 import { useEffect, useId, useRef, useState, type ChangeEvent } from "react";
+import { createPortal } from "react-dom";
+import { buildQuery, buildXSearchLatestUrl, buildXSearchTopUrl } from "../buildQuery";
 import { FieldHint } from "./FieldHint";
 import { FIELD_HINTS, FIELD_PLACEHOLDERS } from "../fieldHints";
 import type { PresetImportFeedback } from "../hooks/useLocalConditions";
 import type { SavedPreset } from "../savedPresets";
+import type { SearchConditions } from "../types";
 
 interface SavedPresetsMenuProps {
   presets: SavedPreset[];
@@ -37,7 +40,12 @@ export function SavedPresetsMenu({
   const [importMessage, setImportMessage] = useState<PresetImportFeedback | null>(
     null,
   );
+  const [confirmAction, setConfirmAction] = useState<{
+    kind: "overwrite" | "delete";
+    preset: SavedPreset;
+  } | null>(null);
   const menuRef = useRef<HTMLDivElement>(null);
+  const confirmRef = useRef<HTMLDivElement>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
   const importInputId = useId();
 
@@ -45,13 +53,24 @@ export function SavedPresetsMenu({
     if (!open) return;
 
     const onPointerDown = (event: PointerEvent) => {
-      if (menuRef.current && !menuRef.current.contains(event.target as Node)) {
-        setOpen(false);
+      const target = event.target as Node;
+      if (menuRef.current?.contains(target)) return;
+      if (confirmRef.current?.contains(target)) return;
+
+      if (confirmAction) {
+        setConfirmAction(null);
+        return;
       }
+      setOpen(false);
     };
 
     document.addEventListener("pointerdown", onPointerDown);
     return () => document.removeEventListener("pointerdown", onPointerDown);
+  }, [open, confirmAction]);
+
+  useEffect(() => {
+    if (open) return;
+    setConfirmAction(null);
   }, [open]);
 
   useEffect(() => {
@@ -80,6 +99,48 @@ export function SavedPresetsMenu({
     const result = await onImportCsv(file);
     setImportMessage(result);
   };
+
+  const openPresetSearch = (
+    conditions: SearchConditions,
+    mode: "latest" | "top",
+  ) => {
+    const query = buildQuery(conditions);
+    if (!query) return;
+
+    const url =
+      mode === "latest"
+        ? buildXSearchLatestUrl(query)
+        : buildXSearchTopUrl(query);
+    window.open(url, "_blank", "noopener,noreferrer");
+  };
+
+  const handleOverwrite = (preset: SavedPreset) => {
+    setConfirmAction({ kind: "overwrite", preset });
+  };
+
+  const handleDelete = (preset: SavedPreset) => {
+    setConfirmAction({ kind: "delete", preset });
+  };
+
+  const handleConfirm = () => {
+    if (!confirmAction) return;
+
+    if (confirmAction.kind === "overwrite") {
+      onUpdate(confirmAction.preset.id);
+    } else {
+      onDelete(confirmAction.preset.id);
+    }
+    setConfirmAction(null);
+  };
+
+  const confirmMessage =
+    confirmAction?.kind === "overwrite"
+      ? `「${confirmAction.preset.name}」を、現在の検索条件で上書きしますか？`
+      : confirmAction?.kind === "delete"
+        ? `「${confirmAction.preset.name}」を削除しますか？この操作は取り消せません。`
+        : "";
+
+  const confirmLabel = confirmAction?.kind === "overwrite" ? "上書き" : "削除";
 
   return (
     <div className={`presets-menu ${open ? "presets-menu--open" : ""}`} ref={menuRef}>
@@ -177,43 +238,112 @@ export function SavedPresetsMenu({
             <>
               <p className="presets-list-label">保存済みの検索条件</p>
               <ul className="preset-list">
-                {presets.map((preset) => (
-                  <li key={preset.id} className="preset-item">
-                    <button
-                      type="button"
-                      className="preset-load"
-                      title={formatDate(preset.savedAt)}
-                      onClick={() => handleLoad(preset.id)}
-                    >
-                      {preset.name}
-                    </button>
-                    <div className="preset-actions">
+                {presets.map((preset) => {
+                  const hasQuery = buildQuery(preset.conditions).length > 0;
+
+                  return (
+                    <li key={preset.id} className="preset-item">
                       <button
                         type="button"
-                        className="btn btn-ghost btn-sm btn-icon"
-                        title={FIELD_HINTS.presetOverwrite}
-                        onClick={() => onUpdate(preset.id)}
+                        className="preset-load"
+                        title={formatDate(preset.savedAt)}
+                        onClick={() => handleLoad(preset.id)}
                       >
-                        上書き
+                        {preset.name}
                       </button>
-                      <button
-                        type="button"
-                        className="btn btn-ghost btn-sm btn-icon btn-danger"
-                        title={FIELD_HINTS.presetDelete}
-                        onClick={() => onDelete(preset.id)}
-                      >
-                        削除
-                      </button>
-                    </div>
-                  </li>
-                ))}
+                      <div className="preset-actions">
+                        <button
+                          type="button"
+                          className="btn btn-primary btn-sm btn-icon"
+                          disabled={!hasQuery}
+                          title={FIELD_HINTS.presetSearchLatest}
+                          onClick={() => openPresetSearch(preset.conditions, "latest")}
+                        >
+                          最新
+                        </button>
+                        <button
+                          type="button"
+                          className="btn btn-secondary btn-sm btn-icon"
+                          disabled={!hasQuery}
+                          title={FIELD_HINTS.presetSearchTop}
+                          onClick={() => openPresetSearch(preset.conditions, "top")}
+                        >
+                          トップ
+                        </button>
+                        <button
+                          type="button"
+                          className="btn btn-ghost btn-sm btn-icon"
+                          title={FIELD_HINTS.presetOverwrite}
+                          onClick={() => handleOverwrite(preset)}
+                        >
+                          上書き
+                        </button>
+                        <button
+                          type="button"
+                          className="btn btn-ghost btn-sm btn-icon btn-danger"
+                          title={FIELD_HINTS.presetDelete}
+                          onClick={() => handleDelete(preset)}
+                        >
+                          削除
+                        </button>
+                      </div>
+                    </li>
+                  );
+                })}
               </ul>
             </>
           ) : (
             <p className="preset-empty">保存した検索条件はここに表示されます</p>
           )}
+
         </div>
       )}
+
+      {confirmAction &&
+        createPortal(
+          <div
+            ref={confirmRef}
+            className="preset-confirm-overlay"
+            role="alertdialog"
+            aria-modal="true"
+            aria-labelledby="preset-confirm-title"
+            aria-describedby="preset-confirm-message"
+            onClick={() => setConfirmAction(null)}
+          >
+            <div
+              className="preset-confirm"
+              onClick={(event) => event.stopPropagation()}
+            >
+              <p id="preset-confirm-title" className="preset-confirm-title">
+                確認
+              </p>
+              <p id="preset-confirm-message" className="preset-confirm-message">
+                {confirmMessage}
+              </p>
+              <div className="preset-confirm-actions">
+                <button
+                  type="button"
+                  className="btn btn-ghost btn-sm"
+                  onClick={() => setConfirmAction(null)}
+                >
+                  キャンセル
+                </button>
+                <button
+                  type="button"
+                  className={`btn btn-sm ${
+                    confirmAction.kind === "delete"
+                      ? "btn-danger-solid"
+                      : "btn-primary"
+                  }`}
+                  onClick={handleConfirm}
+                >
+                  {confirmLabel}
+                </button>
+              </div>
+            </div>
+          </div>,
+          document.body,
+        )}
     </div>
   );
 }
