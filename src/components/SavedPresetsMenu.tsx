@@ -158,7 +158,15 @@ export function SavedPresetsMenu({
       </button>
 
       {open && (
-        <div className="presets-popover" role="dialog" aria-label="検索条件の保存と読み込み">
+        <>
+          <button
+            type="button"
+            className="presets-popover-backdrop"
+            aria-label="閉じる"
+            tabIndex={-1}
+            onClick={() => setOpen(false)}
+          />
+          <div className="presets-popover" role="dialog" aria-label="検索条件の保存と読み込み">
           <div className="presets-popover-header">
             <span className="presets-popover-title">検索条件の保存・読み込み</span>
             <FieldHint text={FIELD_HINTS.presetName} />
@@ -297,6 +305,7 @@ export function SavedPresetsMenu({
           )}
 
         </div>
+        </>
       )}
 
       {confirmAction &&

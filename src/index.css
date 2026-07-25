@@ -453,18 +453,25 @@ body {
   border-radius: 999px;
 }
 
+.presets-popover-backdrop {
+  display: none;
+}
+
 .presets-popover {
   position: absolute;
   top: calc(100% + 0.375rem);
   right: 0;
   z-index: 40;
   width: min(420px, calc(100vw - 1.75rem));
+  max-height: min(70dvh, calc(100dvh - 5rem));
   padding: 0.625rem;
   background: var(--bg-elevated);
   border: 1px solid var(--border);
   border-radius: var(--radius);
   box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5);
-  overflow: hidden;
+  overflow-x: hidden;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
 }
 
 .presets-popover-header {
@@ -720,5 +727,27 @@ input[type="date"]::-webkit-calendar-picker-indicator {
   input[type="date"].field-input {
     padding-right: 0.25rem;
     font-size: 0.75rem;
+  }
+
+  .presets-popover-backdrop {
+    display: block;
+    position: fixed;
+    inset: 0;
+    z-index: 99;
+    padding: 0;
+    border: none;
+    background: rgba(0, 0, 0, 0.55);
+    cursor: default;
+  }
+
+  .presets-popover {
+    position: fixed;
+    z-index: 100;
+    top: max(0.75rem, env(safe-area-inset-top, 0px));
+    right: 0.875rem;
+    bottom: max(0.75rem, env(safe-area-inset-bottom, 0px));
+    left: 0.875rem;
+    width: auto;
+    max-height: none;
   }
 }
